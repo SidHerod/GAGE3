@@ -8,7 +8,7 @@ import AccountScreen from './components/AccountScreen';
 import PhotoUploadScreen from './components/PhotoUploadScreen';
 import AgeGuessingScreen from './components/AgeGuessingScreen';
 import StatisticsScreen from './components/StatisticsScreen';
-import PrivacyPolicy from './components/PrivacyPolicy'; // Your policy component
+import PrivacyPolicy from './components/PrivacyPolicy';
 import LoadingSpinner from './components/LoadingSpinner';
 import { UserIcon, GageLogoIcon, ArrowRightStartOnRectangleIcon } from './components/icons';
 
@@ -133,7 +133,7 @@ const MainAppLayout: React.FC = () => {
           </Link>
         </p>
       </footer>
-    </div> // ✅ this closes MainAppLayout
+    </div>
   );
 };
 
