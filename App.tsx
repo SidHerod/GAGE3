@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import PrivacyPolicyScreen from './components/PrivacyPolicyScreen';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import React, { useEffect } from 'react';
@@ -190,15 +191,17 @@ const MainAppLayout: React.FC = () => {
         <AppContent />
       </main>
       
-      <footer className="bg-white/50 py-6 text-center">
+     <footer className="bg-white/50 py-6 text-center">
   <p className="text-sm text-gray-600">
     &copy; {new Date().getFullYear()} Gage. For entertainment purposes only.{' '}
-    <a href="/#/privacy-policy" className="text-blue-600 underline ml-2">Privacy Policy</a>
+    <Link
+      to="/privacy-policy"
+      className="text-blue-600 hover:text-blue-800 underline transition-colors"
+    >
+      Privacy Policy
+    </Link>
   </p>
 </footer>
-    </div>
-  );
-}
 
 const App: React.FC = () => {
   return (
