@@ -119,16 +119,18 @@ const MainAppLayout: React.FC = () => {
       </main>
 
       <footer className="bg-white/50 py-6 text-center">
-        <p className="text-sm text-gray-600">
-          &copy; {new Date().getFullYear()} Gage. For entertainment purposes only.{' '}
-          <Link to="/privacy-policy" className="text-blue-600 hover:text-blue-800 underline">
-            Privacy Policy
-          </Link>
-        </p>
-      </footer>
-    </div>
-  );
-};
+  <p className="text-sm text-gray-600">
+    &copy; {new Date().getFullYear()} Gage. For entertainment purposes only.{' '}
+    <a
+      href="/#/privacy-policy"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-blue-600 hover:text-blue-800 underline"
+    >
+      Privacy Policy
+    </a>
+  </p>
+</footer>
 
 const App: React.FC = () => {
   return (
