@@ -1,4 +1,4 @@
-
+import PrivacyPolicy from './components/PrivacyPolicy';
 import React, { useEffect } from 'react';
 import { HashRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext'; // Import AuthProvider and useAuth
@@ -85,11 +85,15 @@ const AppContent: React.FC = () => {
       <Route 
         path="/game" 
         element={profileIsComplete ? <AgeGuessingScreen /> : <Navigate to={currentUser ? (profile && !profile.hasProvidedDob ? "/account" : (profile && !profile.photoBase64 ? "/upload-photo" : "/login") ) : "/login"} replace />} 
-      />
+     />
       <Route 
         path="/statistics" 
         element={profileIsComplete ? <StatisticsScreen /> : <Navigate to={currentUser ? (profile && !profile.hasProvidedDob ? "/account" : (profile && !profile.photoBase64 ? "/upload-photo" : "/login") ) : "/login"} replace />} 
-      />
+     />
+      <Route 
+        path="/privacy-policy" 
+        element={<PrivacyPolicy />} 
+     />
       <Route 
         path="*" 
         element={<Navigate to={profileIsComplete ? "/game" : (currentUser ? (profile && !profile.hasProvidedDob ? "/account" : (profile && !profile.photoBase64 ? "/upload-photo" : "/login") ) : "/login")} replace />} 
