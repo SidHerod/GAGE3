@@ -3,7 +3,7 @@ import { HashRouter, Routes, Route, Navigate, useNavigate, useLocation, Link } f
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ProfileProvider, useProfile } from './contexts/ProfileContext';
 
-import LoginScreen from './components/LoginScreen'; 
+import LoginScreen from './components/LoginScreen';
 import AccountScreen from './components/AccountScreen';
 import PhotoUploadScreen from './components/PhotoUploadScreen';
 import AgeGuessingScreen from './components/AgeGuessingScreen';
@@ -23,6 +23,7 @@ const AppContent: React.FC = () => {
 
     if (currentUser) {
       if (!profile) return;
+
       if (!profile.hasProvidedDob && location.pathname !== '/account') {
         navigate('/account', { replace: true });
       } else if (!profile.photoBase64 && location.pathname !== '/upload-photo') {
@@ -50,13 +51,10 @@ const AppContent: React.FC = () => {
 
   return (
     <Routes>
-      <Route 
-        path="/login" 
-        element={!currentUser ? <LoginScreen /> : <Navigate to={profileIsComplete ? "/game" : (!profile?.hasProvidedDob ? "/account" : "/upload-photo")} replace />} 
-      />
+      <Route path="/login" element={!currentUser ? <LoginScreen /> : <Navigate to={profileIsComplete ? '/game' : (!profile?.hasProvidedDob ? '/account' : '/upload-photo')} replace />} />
       <Route path="/account" element={currentUser ? <AccountScreen /> : <Navigate to="/login" replace />} />
-      <Route path="/upload-photo" element={currentUser && profile?.hasProvidedDob ? <PhotoUploadScreen /> : <Navigate to={currentUser ? "/account" : "/login"} replace />} />
-      <Route path="/game" element={profileIsComplete ? <AgeGuessingScreen /> : <Navigate to={currentUser ? (!profile?.hasProvidedDob ? "/account" : "/upload-photo") : "/login"} replace />} />
+      <Route path="/upload-photo" element={currentUser && profile?.hasProvidedDob ? <PhotoUploadScreen /> : <Navigate to={currentUser ? '/account' : '/login'} replace />} />
+      <Route path="/game" element={profileIsComplete ? <AgeGuessingScreen /> : <Navigate to={currentUser ? (!profile?.hasProvidedDob ? '/account' : '/upload-photo') : '/login'} replace />} />
       <Route path="/statistics" element={profileIsComplete ? <StatisticsScreen /> : <Navigate to="/login" replace />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="*" element={<Navigate to="/login" replace />} />
@@ -100,13 +98,11 @@ const MainAppLayout: React.FC = () => {
                 </button>
               )}
             </div>
-
             <div className="w-1/3 flex justify-center">
               <button onClick={() => navigate(profileIsComplete ? '/game' : '/login')} className="text-[#ff1818]">
                 <GageLogoIcon className="h-10 sm:h-12 w-auto" />
               </button>
             </div>
-
             <div className="w-1/3 flex justify-end">
               {currentUser && (
                 <button onClick={handleLogout} className="p-2 text-gray-500 hover:text-[#ff1818]">
@@ -125,10 +121,7 @@ const MainAppLayout: React.FC = () => {
       <footer className="bg-white/50 py-6 text-center">
         <p className="text-sm text-gray-600">
           &copy; {new Date().getFullYear()} Gage. For entertainment purposes only.{' '}
-          <Link
-            to="/privacy-policy"
-            className="text-blue-600 hover:text-blue-800 underline"
-          >
+          <Link to="/privacy-policy" className="text-blue-600 hover:text-blue-800 underline">
             Privacy Policy
           </Link>
         </p>
