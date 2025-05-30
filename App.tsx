@@ -95,6 +95,10 @@ const AppContent: React.FC = () => {
         path="/privacy-policy" 
         element={<PrivacyPolicy />} 
      />
+  <Route 
+    path="/privacy-policy" 
+    element={<PrivacyPolicyScreen />} 
+  />
       <Route 
         path="*" 
         element={<Navigate to={profileIsComplete ? "/game" : (currentUser ? (profile && !profile.hasProvidedDob ? "/account" : (profile && !profile.photoBase64 ? "/upload-photo" : "/login") ) : "/login")} replace />} 
