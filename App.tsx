@@ -186,10 +186,11 @@ const MainAppLayout: React.FC = () => {
       </main>
       
       <footer className="bg-white/50 py-6 text-center">
-        <p className="text-sm text-gray-600">
-          &copy; {new Date().getFullYear()} Gage. For entertainment purposes only.
-        </p>
-      </footer>
+  <p className="text-sm text-gray-600">
+    &copy; {new Date().getFullYear()} Gage. For entertainment purposes only.{' '}
+    <a href="/#/privacy-policy" className="text-blue-600 underline ml-2">Privacy Policy</a>
+  </p>
+</footer>
     </div>
   );
 }
