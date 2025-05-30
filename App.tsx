@@ -1,9 +1,17 @@
 import React, { useEffect } from 'react';
-import { HashRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import {
+  HashRouter,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+  useLocation,
+  Link
+} from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ProfileProvider, useProfile } from './contexts/ProfileContext';
 
-import LoginScreen from './components/LoginScreen'; 
+import LoginScreen from './components/LoginScreen';
 import AccountScreen from './components/AccountScreen';
 import PhotoUploadScreen from './components/PhotoUploadScreen';
 import AgeGuessingScreen from './components/AgeGuessingScreen';
@@ -50,7 +58,10 @@ const AppContent: React.FC = () => {
 
   return (
     <Routes>
-      <Route path="/login" element={!currentUser ? <LoginScreen /> : <Navigate to={profileIsComplete ? "/game" : (!profile?.hasProvidedDob ? "/account" : "/upload-photo")} replace />} />
+      <Route 
+        path="/login" 
+        element={!currentUser ? <LoginScreen /> : <Navigate to={profileIsComplete ? "/game" : (!profile?.hasProvidedDob ? "/account" : "/upload-photo")} replace />} 
+      />
       <Route path="/account" element={currentUser ? <AccountScreen /> : <Navigate to="/login" replace />} />
       <Route path="/upload-photo" element={currentUser && profile?.hasProvidedDob ? <PhotoUploadScreen /> : <Navigate to={currentUser ? "/account" : "/login"} replace />} />
       <Route path="/game" element={profileIsComplete ? <AgeGuessingScreen /> : <Navigate to={currentUser ? (!profile?.hasProvidedDob ? "/account" : "/upload-photo") : "/login"} replace />} />
@@ -120,18 +131,21 @@ const MainAppLayout: React.FC = () => {
       </main>
 
       <footer className="bg-white/50 py-6 text-center">
-  <p className="text-sm text-gray-600">
-    &copy; {new Date().getFullYear()} Gage. For entertainment purposes only.{' '}
-    <a
-      href="#/privacy-policy"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-blue-600 hover:text-blue-800 underline transition-colors"
-    >
-      Privacy Policy
-    </a>
-  </p>
-</footer>
+        <p className="text-sm text-gray-600">
+          &copy; {new Date().getFullYear()} Gage. For entertainment purposes only.{' '}
+          <a
+            href="#/privacy-policy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:text-blue-800 underline"
+          >
+            Privacy Policy
+          </a>
+        </p>
+      </footer>
+    </div>
+  );
+};
 
 const App: React.FC = () => {
   return (
