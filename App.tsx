@@ -1,3 +1,4 @@
+import PrivacyPolicyScreen from './components/PrivacyPolicyScreen';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import React, { useEffect } from 'react';
 import { HashRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
