@@ -29,17 +29,22 @@ const AppContent: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const profileIsComplete =
+    currentUser && profile?.hasProvidedDob && profile?.photoBase64;
+
   useEffect(() => {
-    if (isAuthLoading || (currentUser && isProfileLoading)) return;
+    if (isAuthLoading || isProfileLoading) return;
 
     if (currentUser) {
       if (!profile) return;
+
       if (!profile.hasProvidedDob && location.pathname !== '/account') {
         navigate('/account', { replace: true });
       } else if (!profile.photoBase64 && location.pathname !== '/upload-photo') {
         navigate('/upload-photo', { replace: true });
       } else if (
-        ['/', '/login', '/account', '/upload-photo'].includes(location.pathname)
+        ['/', '/login', '/account', '/upload-photo'].includes(location.pathname) &&
+        profileIsComplete
       ) {
         navigate('/game', { replace: true });
       }
@@ -53,23 +58,19 @@ const AppContent: React.FC = () => {
     isProfileLoading,
     location.pathname,
     navigate,
+    profileIsComplete,
   ]);
 
   if (isAuthLoading || (currentUser && isProfileLoading)) {
-    if (location.pathname !== '/login' || currentUser) {
-      return (
-        <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
-          <LoadingSpinner size="lg" />
-          <p className="ml-3 text-slate-700">
-            {isAuthLoading ? 'Authenticating...' : 'Loading profile...'}
-          </p>
-        </div>
-      );
-    }
+    return (
+      <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
+        <LoadingSpinner size="lg" />
+        <p className="ml-3 text-slate-700">
+          {isAuthLoading ? 'Authenticating...' : 'Loading profile...'}
+        </p>
+      </div>
+    );
   }
-
-  const profileIsComplete =
-    currentUser && profile?.hasProvidedDob && profile?.photoBase64;
 
   return (
     <Routes>
@@ -145,17 +146,17 @@ const AppContent: React.FC = () => {
 
 const MainAppLayout: React.FC = () => {
   const { currentUser } = useAuth();
-  const { profile, isLoading: isProfileLoading } = useProfile();
+  const { profile } = useProfile();
   const { signOut } = useAuth();
   const navigate = useNavigate();
+
+  const profileIsComplete =
+    currentUser && profile?.hasProvidedDob && profile?.photoBase64;
 
   const handleLogout = async () => {
     await signOut();
     navigate('/login', { replace: true });
   };
-
-  const profileIsComplete =
-    currentUser && profile?.hasProvidedDob && profile?.photoBase64;
 
   return (
     <div className="min-h-screen bg-[#F0E1D1] text-slate-800 flex flex-col">
@@ -216,8 +217,7 @@ const MainAppLayout: React.FC = () => {
 
       <footer className="bg-white/50 py-6 text-center">
         <p className="text-sm text-gray-600">
-          &copy; {new Date().getFullYear()} Gage. For entertainment purposes
-          only.{' '}
+          &copy; {new Date().getFullYear()} Gage. For entertainment purposes only.{' '}
           <a
             href="/privacy-policy.html"
             target="_blank"
@@ -245,3 +245,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+
