@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import type { UserProfile, OtherUser, GuessRecord, EnrichedUserProfile, SetProfilePayload } from '../types';
 import { useAuth } from '../contexts/AuthContext'; // Import useAuth
-import { convertUrlToBase64 } from '../firebaseConfig'; // Import helper
+import { convertUrlToBase64 } from '../'; // Import helper
 
 const PROFILE_STORAGE_PREFIX = 'gageUserProfile_firebase_uid_v1_'; // Changed prefix for UID
 const ACTIVE_GAGE_USER_ID_KEY = 'activeGageUserFirebaseUid_v1'; // Stores Firebase UID
@@ -64,11 +64,11 @@ export function useProfileHook(): {
   clearProfile: () => void;
   isLoading: boolean; // This is app profile loading, not auth loading
 } {
-  const { currentUser, isLoading: isAuthLoading } = useAuth(); // Get Firebase user and auth loading state
+  const { currentUser, isLoading: isAuthLoading } = useAuth(); // Get  user and auth loading state
   const [profileState, setProfileState] = useState<UserProfile | null>(null);
   const [isProfileLoading, setIsProfileLoading] = useState(true);
 
-  // Load profile when Firebase user changes or on initial load
+  // Load profile when  user changes or on initial load
   useEffect(() => {
     if (isAuthLoading) {
       setIsProfileLoading(true);
@@ -82,7 +82,7 @@ export function useProfileHook(): {
           const storedProfile = localStorage.getItem(PROFILE_STORAGE_PREFIX + currentUser.uid);
           if (storedProfile) {
             const parsedProfile = JSON.parse(storedProfile) as UserProfile;
-            // Ensure essential fields from Firebase are up-to-date if they somehow differ
+            // Ensure essential fields from  are up-to-date if they somehow differ
             // (though typically they wouldn't once set unless changed outside this app)
             parsedProfile.email = currentUser.email || parsedProfile.email;
             // Name can be changed by user, so don't always override from currentUser.displayName
@@ -100,7 +100,7 @@ export function useProfileHook(): {
             setProfileState(parsedProfile);
             localStorage.setItem(ACTIVE_GAGE_USER_ID_KEY, currentUser.uid);
           } else {
-            // No stored profile, create a new one from Firebase user data
+            // No stored profile, create a new one from  user data
             let googlePhotoBase64: string | null = null;
             let photoIsFromGoogle = false;
             if (currentUser.photoURL) {
@@ -131,7 +131,7 @@ export function useProfileHook(): {
           setProfileState(null); 
         }
       } else {
-        // No Firebase user logged in
+        // No  user logged in
         setProfileState(null);
         const activeUserId = localStorage.getItem(ACTIVE_GAGE_USER_ID_KEY);
         if (activeUserId) {
@@ -156,7 +156,7 @@ export function useProfileHook(): {
       if (profileState && profileState.id) {
         localStorage.setItem(PROFILE_STORAGE_PREFIX + profileState.id, JSON.stringify(profileState));
         localStorage.setItem(ACTIVE_GAGE_USER_ID_KEY, profileState.id);
-      } else if (!profileState) { // Profile is null (logged out or no Firebase user)
+      } else if (!profileState) { // Profile is null (logged out or no  user)
         const activeUserId = localStorage.getItem(ACTIVE_GAGE_USER_ID_KEY);
         if (activeUserId) {
            // We don't remove the profile data itself, just the active user key,
@@ -226,8 +226,8 @@ export function useProfileHook(): {
   }, []);
 
   const clearProfile = useCallback(() => {
-    // This function's role changes. It's mostly called by Firebase sign-out effect now.
-    // If called manually, it might de-sync with Firebase auth state.
+    // This function's role changes. It's mostly called by  sign-out effect now.
+    // If called manually, it might de-sync with  auth state.
     // For now, it just clears the local React state. The useEffect will handle localStorage.
     setProfileState(null);
   }, []);
