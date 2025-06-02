@@ -1,4 +1,4 @@
-import { db } from '../firebase';
+import { db } from './firebase';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ImageUploader from './ImageUploader';
