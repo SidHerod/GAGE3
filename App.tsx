@@ -15,7 +15,7 @@ import AccountScreen from './components/AccountScreen';
 import PhotoUploadScreen from './components/PhotoUploadScreen';
 import AgeGuessingScreen from './components/AgeGuessingScreen';
 import StatisticsScreen from './components/StatisticsScreen';
-import PrivacyPolicy from './components/PrivacyPolicy'; // Only used for internal testing
+import PrivacyPolicy from './components/PrivacyPolicy';
 import LoadingSpinner from './components/LoadingSpinner';
 import {
   UserIcon,
@@ -38,14 +38,14 @@ const AppContent: React.FC = () => {
     if (currentUser) {
       if (!profile) return;
 
+      const onPublicPage = ['/', '/login'].includes(location.pathname);
+      const onProtectedPage = ['/game', '/statistics'].includes(location.pathname);
+
       if (!profile.hasProvidedDob && location.pathname !== '/account') {
         navigate('/account', { replace: true });
       } else if (!profile.photoBase64 && location.pathname !== '/upload-photo') {
         navigate('/upload-photo', { replace: true });
-      } else if (
-        ['/', '/login', '/account', '/upload-photo'].includes(location.pathname) &&
-        profileIsComplete
-      ) {
+      } else if (onPublicPage && profileIsComplete) {
         navigate('/game', { replace: true });
       }
     } else if (location.pathname !== '/login') {
@@ -245,4 +245,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
