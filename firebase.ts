@@ -1,4 +1,3 @@
-// firebase.ts
 import { initializeApp, type FirebaseOptions } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
@@ -20,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 // Auth & Firestore
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
-export const firestore = getFirestore(app);
+export const db = getFirestore(app); // Changed firestore to db
 
 // Optional: Convert URL to base64 (keep if needed)
 export const convertUrlToBase64 = async (url: string): Promise<string | null> => {
