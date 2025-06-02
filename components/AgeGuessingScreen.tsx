@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from '../contexts/ProfileContext';
 import { getAvailableProfilesForGuessing } from '../hooks/useProfile';
-import { db } from '../firebase';
+import { db } from './firebase';
 import { doc, updateDoc, increment, arrayUnion } from 'firebase/firestore';
 import type { OtherUser } from '../types';
 import LoadingSpinner from './LoadingSpinner';
