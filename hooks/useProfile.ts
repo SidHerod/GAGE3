@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import type { UserProfile, OtherUser, GuessRecord, EnrichedUserProfile, SetProfilePayload } from '../types';
 import { useAuth } from '../contexts/AuthContext'; // Import useAuth
-// import { convertUrlToBase64 } from '../'; // Import helper - REMOVED
 
 const PROFILE_STORAGE_PREFIX = 'gageUserProfile_firebase_uid_v1_'; // Changed prefix for UID
 const ACTIVE_GAGE_USER_ID_KEY = 'activeGageUserFirebaseUid_v1'; // Stores Firebase UID
@@ -57,7 +56,7 @@ export function getAvailableProfilesForGuessing(currentUserId: string): OtherUse
   return profiles;
 }
 
-// Helper function for base64 conversion - ADDED
+// Helper function for base64 conversion
 async function convertUrlToBase64(url: string): Promise<string | null> {
   try {
     const response = await fetch(url);
