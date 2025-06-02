@@ -24,13 +24,13 @@ const getGuessAccuracyVisual = (record: GuessRecord) => {
   if (diff === 0) {
     title = "Spot on!";
     icon = <CheckCircleIcon className="w-5 h-5 text-green-500 ml-2" />;
-  } else if (diff <= 2) { 
+  } else if (diff <= 2) {
     title = `Very Close! Off by ${diff} year${diff === 1 ? '' : 's'}`;
     icon = <CheckCircleIcon className="w-5 h-5 text-yellow-500 ml-2" />;
-  } else if (diff <= 5) { 
+  } else if (diff <= 5) {
     title = `Close! Off by ${diff} years`;
     icon = <LightBulbIcon className="w-5 h-5 text-orange-500 ml-2" />;
-  } else { 
+  } else {
     title = `Off by ${diff} years`;
     icon = <XCircleIcon className="w-5 h-5 text-red-500 ml-2" />;
   }
@@ -73,10 +73,12 @@ const StatisticsScreen: React.FC = () => {
   };
 
   const gagerScore = calculateGagerScore();
-  const yourGage = profile.communityAverageGuess !== null ? Math.round(profile.communityAverageGuess) : 'N/A';
+  const yourGage = profile.numberOfCommunityGuesses > 0 && profile.communityAverageGuess !== null
+    ? Math.round(profile.communityAverageGuess)
+    : 'N/A';
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8 ">
+    <div className="max-w-3xl mx-auto space-y-8">
       <div className="flex flex-col items-center space-y-4 pt-4 sm:pt-0">
         {profile.photoBase64 ? (
           <img 
@@ -88,10 +90,10 @@ const StatisticsScreen: React.FC = () => {
           <UserIcon className="w-32 h-32 sm:w-40 sm:h-40 text-gray-300 bg-gray-100 p-4 rounded-full shadow-xl border-4 border-white" />
         )}
         <div className="text-center">
-            <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff4545] to-[#ff1818]">
+          <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff4545] to-[#ff1818]">
             {profile.name}
-            </h1>
-            <p className="text-gray-600 text-lg">Age: {profile.actualAge}</p>
+          </h1>
+          <p className="text-gray-600 text-lg">Age: {profile.actualAge}</p>
         </div>
       </div>
 
@@ -138,7 +140,7 @@ const StatisticsScreen: React.FC = () => {
                   <p className="text-xs text-gray-500 mt-1">
                     Points Earned: {record.pointsEarned}
                   </p>
-                   <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500">
                     Difference: {Math.abs(record.theirActualAge - record.yourGuess)} year{Math.abs(record.theirActualAge - record.yourGuess) === 1 ? '' : 's'}
                   </p>
                 </div>
@@ -173,3 +175,4 @@ const StatisticsScreen: React.FC = () => {
 };
 
 export default StatisticsScreen;
+
